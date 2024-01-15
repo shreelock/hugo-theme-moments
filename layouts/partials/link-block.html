@@ -1,0 +1,33 @@
+{{/* BEGIN parse the input parameter */}}
+{{/* PART 1 default link */}}
+{{ $resource_type := "link" }}
+
+{{ $logo_file := "default_link_logo.png" }}
+
+{{/* 1.3 github repo */}}
+{{ if eq 1 (len (findRE `(https?://)?(www\.)?github\.com([-a-zA-Z0-9()@:%\+.~#?&/=_]*)` .a)) }}
+    {{ $logo_file = "github.png"}}
+{{ end }}
+
+
+{{/* BEGIN generate output */}}
+{{/* PART 1 default link */}}
+{{ if eq "link" $resource_type }}
+<div class="share-link-block">
+    <table class="link-table">
+    <tr>
+        <td>
+            {{ $baseurl := .baseurl}}
+            {{ with .logo }}
+            <img src="{{ . }}" class="link-logo">
+            {{ else }}
+            <img src="{{ $baseurl }}/link-logos/{{ $logo_file }}" class="link-logo">
+            {{ end }}
+        </td>
+        <td style="padding-left: 20px">
+            <a href="{{ .a }}" target="_blank" rel="noopener noreferrer">{{.word}}</a>
+        </td>
+    </tr>
+    </table>
+</div>
+{{ end }}
